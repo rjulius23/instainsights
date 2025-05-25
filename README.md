@@ -1,4 +1,3 @@
-```markdown
 # Hiker Instagram Insights
 
 A lightweight, Tkinter-based desktop app that lets you:
