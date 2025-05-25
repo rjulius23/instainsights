@@ -30,25 +30,20 @@ class TestHikerApiClient:
             'is_verified': True,
             'is_private': False,
             'profile_pic_url': 'https://example.com/pic.jpg',
-            'statistics': {
-                'followers_count': 1000,
-                'following_count': 500,
-                'posts_count': 100,
-                'engagement_rate': 3.5,
-                'avg_likes': 50.0,
-                'avg_comments': 5.0,
-                'last_updated': 1672531200  # 2023-01-01 00:00:00
-            }
+            'follower_count': 1000,
+            'following_count': 500,
+            'media_count': 100,
+            'last_updated': 1672531200  # 2023-01-01 00:00:00
         }
         
         # Configure mock to return our response
-        self.mock_hikerapi.user_info.return_value = mock_response
+        self.mock_hikerapi.user_by_username_v1.return_value = mock_response
         
         # Call the method
         profile = self.api_client.get_profile('testuser')
         
         # Verify the mock was called correctly
-        self.mock_hikerapi.user_info.assert_called_once_with('testuser')
+        self.mock_hikerapi.user_by_username_v1.assert_called_once_with('testuser')
         
         # Verify the returned profile
         assert isinstance(profile, Profile)
@@ -65,68 +60,49 @@ class TestHikerApiClient:
         assert stats.followers_count == 1000
         assert stats.following_count == 500
         assert stats.posts_count == 100
-        assert stats.engagement_rate == 3.5
-        assert stats.avg_likes == 50.0
-        assert stats.avg_comments == 5.0
         assert stats.last_updated == datetime.fromtimestamp(1672531200)
     
     def test_search_profiles(self):
         """Test searching for profiles."""
         # Mock API response
-        mock_response = {
-            'users': [
-                {
+        mock_responses = [
+            {
                     'username': 'user1',
                     'full_name': 'User One',
                     'biography': 'Bio 1',
                     'is_verified': False,
                     'is_private': False,
                     'profile_pic_url': 'https://example.com/pic1.jpg',
-                    'statistics': {
-                        'followers_count': 1000,
-                        'following_count': 500,
-                        'posts_count': 100,
-                        'engagement_rate': 3.5,
-                        'avg_likes': 50.0,
-                        'avg_comments': 5.0,
-                        'last_updated': 1672531200  # 2023-01-01 00:00:00
-                    }
-                },
-                {
+                    'follower_count': 1000,
+                    'following_count': 500,
+                    'posts_count': 100,
+                    'last_updated': 1672531200  # 2023-01-01 00:00:00
+            },
+            {
                     'username': 'user2',
                     'full_name': 'User Two',
                     'biography': 'Bio 2',
                     'is_verified': True,
                     'is_private': True,
                     'profile_pic_url': 'https://example.com/pic2.jpg',
-                    'statistics': {
-                        'followers_count': 5000,
-                        'following_count': 1000,
-                        'posts_count': 200,
-                        'engagement_rate': 4.2,
-                        'avg_likes': 120.0,
-                        'avg_comments': 10.0,
-                        'last_updated': 1672617600  # 2023-01-02 00:00:00
-                    }
-                }
-            ],
-            'total_count': 2,
-            'query_time_ms': 150
-        }
+                    'follower_count': 5000,
+                    'following_count': 1000,
+                    'posts_count': 200,
+                    'last_updated': 1672617600  # 2023-01-02 00:00:00
+            }
+        ]
         
         # Configure mock to return our response
-        self.mock_hikerapi.search_users.return_value = mock_response
+        self.mock_hikerapi.user_by_username_v1.return_value = mock_responses[0]
+        self.mock_hikerapi.user_by_username_v1.side_effect = mock_responses
         
         # Call the method
-        result = self.api_client.search_profiles('user', limit=10)
-        
-        # Verify the mock was called correctly
-        self.mock_hikerapi.search_users.assert_called_once_with('user', limit=10)
+        result = self.api_client.search_profiles('user1,user2')
         
         # Verify the returned result
+        assert self.mock_hikerapi.user_by_username_v1.call_count == 2
         assert len(result.profiles) == 2
         assert result.total_count == 2
-        assert result.query_time_ms == 150
         
         # Verify first profile
         profile1 = result.profiles[0]

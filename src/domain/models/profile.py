@@ -10,9 +10,6 @@ class ProfileStatistics:
     followers_count: int
     following_count: int
     posts_count: int
-    engagement_rate: float
-    avg_likes: float
-    avg_comments: float
     last_updated: datetime
 
 

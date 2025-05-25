@@ -22,9 +22,6 @@ class TestCsvExporter:
             followers_count=1000,
             following_count=500,
             posts_count=100,
-            engagement_rate=3.5,
-            avg_likes=50.0,
-            avg_comments=5.0,
             last_updated=datetime(2023, 1, 1, 12, 0, 0)
         )
         
@@ -32,9 +29,6 @@ class TestCsvExporter:
             followers_count=5000,
             following_count=1000,
             posts_count=200,
-            engagement_rate=4.2,
-            avg_likes=120.0,
-            avg_comments=10.0,
             last_updated=datetime(2023, 1, 2, 12, 0, 0)
         )
         
@@ -87,9 +81,6 @@ class TestCsvExporter:
                 assert rows[0]['followers_count'] == '1000'
                 assert rows[0]['following_count'] == '500'
                 assert rows[0]['posts_count'] == '100'
-                assert rows[0]['engagement_rate'] == '3.5'
-                assert rows[0]['avg_likes'] == '50.0'
-                assert rows[0]['avg_comments'] == '5.0'
                 assert rows[0]['last_updated'] == '2023-01-01 12:00:00'
                 
                 # Check second profile
@@ -100,9 +91,6 @@ class TestCsvExporter:
                 assert rows[1]['followers_count'] == '5000'
                 assert rows[1]['following_count'] == '1000'
                 assert rows[1]['posts_count'] == '200'
-                assert rows[1]['engagement_rate'] == '4.2'
-                assert rows[1]['avg_likes'] == '120.0'
-                assert rows[1]['avg_comments'] == '10.0'
                 assert rows[1]['last_updated'] == '2023-01-02 12:00:00'
                 
         finally:

@@ -13,7 +13,7 @@ class ProfileServiceProtocol(Protocol):
         """Get a profile by username."""
         ...
     
-    def search_profiles(self, query: str, limit: int = 10) -> tuple[Optional[List[Profile]], Optional[str]]:
+    def search_profiles(self, query: str) -> tuple[Optional[List[Profile]], Optional[str]]:
         """Search for profiles matching the query."""
         ...
 
@@ -78,7 +78,7 @@ class MainWindow(ttk.Frame):
         # Create treeview for results
         columns = (
             "username", "full_name", "followers", "following", 
-            "posts", "engagement", "verified"
+            "posts", "verified"
         )
         self._results_tree = ttk.Treeview(
             results_frame,
@@ -93,7 +93,6 @@ class MainWindow(ttk.Frame):
         self._results_tree.heading("followers", text="Followers")
         self._results_tree.heading("following", text="Following")
         self._results_tree.heading("posts", text="Posts")
-        self._results_tree.heading("engagement", text="Engagement")
         self._results_tree.heading("verified", text="Verified")
         
         # Define columns
@@ -102,7 +101,6 @@ class MainWindow(ttk.Frame):
         self._results_tree.column("followers", width=80, anchor=tk.E)
         self._results_tree.column("following", width=80, anchor=tk.E)
         self._results_tree.column("posts", width=60, anchor=tk.E)
-        self._results_tree.column("engagement", width=100, anchor=tk.E)
         self._results_tree.column("verified", width=60, anchor=tk.CENTER)
         
         # Add scrollbar
@@ -192,8 +190,7 @@ class MainWindow(ttk.Frame):
                     f"{stats.followers_count:,}",
                     f"{stats.following_count:,}",
                     f"{stats.posts_count:,}",
-                    f"{stats.engagement_rate:.2f}%",
-                    "✓" if profile.is_verified else ""
+                    "✓" if profile.is_verified else "✗"
                 )
             )
     
@@ -225,7 +222,6 @@ class MainWindow(ttk.Frame):
             f"{', Verified' if profile.is_verified else ''}\n"
             f"Stats: {stats.followers_count:,} followers, {stats.following_count:,} following, "
             f"{stats.posts_count:,} posts\n"
-            f"Engagement: {stats.engagement_rate:.2f}%, Avg likes: {stats.avg_likes:.1f}, "
             f"Avg comments: {stats.avg_comments:.1f}"
         )
         

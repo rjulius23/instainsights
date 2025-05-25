@@ -12,7 +12,7 @@ class ApiClientProtocol(Protocol):
         """Fetch a single profile by username."""
         ...
     
-    def search_profiles(self, query: str, limit: int = 10) -> ProfileSearchResult:
+    def search_profiles(self, query: str) -> ProfileSearchResult:
         """Search for profiles matching the query."""
         ...
 
@@ -50,7 +50,7 @@ class ProfileService:
         except Exception as e:
             return None, str(e)
     
-    def search_profiles(self, query: str, limit: int = 10) -> tuple[Optional[List[Profile]], Optional[str]]:
+    def search_profiles(self, query: str) -> tuple[Optional[List[Profile]], Optional[str]]:
         """
         Search for profiles matching the query.
         
@@ -65,7 +65,7 @@ class ProfileService:
             return None, "Search query cannot be empty"
             
         try:
-            result = self._api_client.search_profiles(query, limit)
+            result = self._api_client.search_profiles(query)
             return result.profiles, None
         except Exception as e:
             return None, str(e)
