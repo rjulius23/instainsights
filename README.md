@@ -76,7 +76,6 @@ The exported file contains:
 ```
 username,follower_count,following_count,posts_count,public_email,is_verified
 messi,431000000,300,1240,,true
-...
 ```
 
 ---
@@ -98,5 +97,6 @@ MIT — see [LICENSE](LICENSE).
 
 ## 🙏 Credits
 
-* [HikerAPI](https://hikerapi.example.com) – unofficial Instagram data
+* [HikerAPI](https://hikerapi.com) – unofficial Instagram data
 * Python standard library (Tkinter, csv, argparse, etc.)
+* ChatGPT - o3 and Claude 3.7 Sonnet
