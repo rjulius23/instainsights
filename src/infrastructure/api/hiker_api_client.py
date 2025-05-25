@@ -17,7 +17,8 @@ class HikerApiClient:
         Args:
             api_key: The API key for authentication
         """
-        self._client = hikerapi.Client(api_key)
+        self._client = hikerapi.Client()
+        self._client.api_key = api_key
     
     def get_profile(self, username: str) -> Profile:
         """
