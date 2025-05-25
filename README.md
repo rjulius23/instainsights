@@ -13,7 +13,7 @@ A lightweight, Tkinter-based desktop app that lets you:
 
 | Feature | Details |
 |---------|---------|
-| **Instant lookup** | Enter a single username, click **Fetch**, and see live stats. |
+| **Instant lookup** | Enter a single username or a comma separated list of users, click **Search**, and see live stats. |
 | **Batch export** | Paste a comma- or newline-separated list, choose a save path, hit **Export CSV**. |
 | **Responsive UI** | Network calls run in background threads so the window never freezes. |
 | **Clean architecture** | Services, exporters, and GUI are separated for easy maintenance. |
