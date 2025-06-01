@@ -1,4 +1,3 @@
-```markdown
 # Hiker Instagram Insights
 
 A lightweight, Tkinter-based desktop app that lets you:
@@ -14,7 +13,7 @@ A lightweight, Tkinter-based desktop app that lets you:
 
 | Feature | Details |
 |---------|---------|
-| **Instant lookup** | Enter a single username, click **Fetch**, and see live stats. |
+| **Instant lookup** | Enter a single username or a comma separated list of users, click **Search**, and see live stats. |
 | **Batch export** | Paste a comma- or newline-separated list, choose a save path, hit **Export CSV**. |
 | **Responsive UI** | Network calls run in background threads so the window never freezes. |
 | **Clean architecture** | Services, exporters, and GUI are separated for easy maintenance. |
@@ -77,7 +76,6 @@ The exported file contains:
 ```
 username,follower_count,following_count,posts_count,public_email,is_verified
 messi,431000000,300,1240,,true
-...
 ```
 
 ---
@@ -99,5 +97,6 @@ MIT — see [LICENSE](LICENSE).
 
 ## 🙏 Credits
 
-* [HikerAPI](https://hikerapi.example.com) – unofficial Instagram data
+* [HikerAPI](https://hikerapi.com) – unofficial Instagram data
 * Python standard library (Tkinter, csv, argparse, etc.)
+* ChatGPT - o3 and Claude 3.7 Sonnet
