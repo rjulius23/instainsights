@@ -44,7 +44,7 @@ def main() -> None:
     # Start the UI
     root = tk.Tk()
     root.title("Instagram Profile Statistics")
-    root.geometry("800x600")
+    root.geometry("1024x768")
     
     app = MainWindow(
         master=root,

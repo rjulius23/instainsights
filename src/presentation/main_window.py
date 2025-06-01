@@ -77,8 +77,8 @@ class MainWindow(ttk.Frame):
         
         # Create treeview for results
         columns = (
-            "username", "full_name", "followers", "following", 
-            "posts", "verified"
+            "username", "full_name", "followers", "following", "avg_post_likes",
+            "avg_post_comments", "avg_post_reshares", "recent_posts", "verified"
         )
         self._results_tree = ttk.Treeview(
             results_frame,
@@ -89,19 +89,26 @@ class MainWindow(ttk.Frame):
         
         # Define headings
         self._results_tree.heading("username", text="Username")
-        self._results_tree.heading("full_name", text="Full Name")
         self._results_tree.heading("followers", text="Followers")
         self._results_tree.heading("following", text="Following")
-        self._results_tree.heading("posts", text="Posts")
+        self._results_tree.heading("avg_post_likes", text="Avg Post Likes")
+        self._results_tree.heading("avg_post_comments", text="Avg Post Comments")
+        self._results_tree.heading("avg_post_reshares", text="Avg Post Reshares")
+        self._results_tree.heading("recent_posts", text="Recent Posts")
         self._results_tree.heading("verified", text="Verified")
+        self._results_tree.heading("full_name", text="Full Name")
+
         
         # Define columns
-        self._results_tree.column("username", width=120)
-        self._results_tree.column("full_name", width=150)
-        self._results_tree.column("followers", width=80, anchor=tk.E)
-        self._results_tree.column("following", width=80, anchor=tk.E)
-        self._results_tree.column("posts", width=60, anchor=tk.E)
+        self._results_tree.column("username", width=80)
+        self._results_tree.column("followers", width=60, anchor=tk.E)
+        self._results_tree.column("following", width=60, anchor=tk.E)
+        self._results_tree.column("avg_post_likes", width=120, anchor=tk.E)
+        self._results_tree.column("avg_post_comments", width=120, anchor=tk.E)
+        self._results_tree.column("avg_post_reshares", width=120, anchor=tk.E)
+        self._results_tree.column("recent_posts", width=60, anchor=tk.E)
         self._results_tree.column("verified", width=60, anchor=tk.CENTER)
+        self._results_tree.column("full_name", width=120)
         
         # Add scrollbar
         scrollbar = ttk.Scrollbar(results_frame, orient=tk.VERTICAL, command=self._results_tree.yview)
@@ -180,6 +187,7 @@ class MainWindow(ttk.Frame):
         """Display profiles in the treeview."""
         for profile in profiles:
             stats = profile.statistics
+            eng_stats = profile.engagement_stats
             
             self._results_tree.insert(
                 "",
@@ -189,7 +197,10 @@ class MainWindow(ttk.Frame):
                     profile.full_name or "",
                     f"{stats.followers_count:,}",
                     f"{stats.following_count:,}",
-                    f"{stats.posts_count:,}",
+                    f"{eng_stats.recent_avg_post_likes:.1f}",
+                    f"{eng_stats.recent_avg_post_comments:.1f}",
+                    f"{eng_stats.recent_avg_post_reshares:.1f}",
+                    f"{eng_stats.recent_post_count}",
                     "✓" if profile.is_verified else "✗"
                 )
             )
@@ -214,6 +225,7 @@ class MainWindow(ttk.Frame):
         self._details_text.delete(1.0, tk.END)
         
         stats = profile.statistics
+        eng_stats = profile.engagement_stats
         details = (
             f"Username: @{profile.username}\n"
             f"Name: {profile.full_name or 'N/A'}\n"
@@ -221,7 +233,8 @@ class MainWindow(ttk.Frame):
             f"Account: {'Private' if profile.is_private else 'Public'}"
             f"{', Verified' if profile.is_verified else ''}\n"
             f"Stats: {stats.followers_count:,} followers, {stats.following_count:,} following, "
-            f"{stats.posts_count:,} posts\n"
+            f"Engagements: {eng_stats.recent_avg_post_likes:.1f} avg likes, {eng_stats.recent_avg_post_comments:.1f} avg comments, "
+            f"{eng_stats.recent_post_count:,} posts recently\n"
             f"Avg comments: {stats.avg_comments:.1f}"
         )
         

@@ -26,7 +26,8 @@ class CsvExporter:
             
         fieldnames = [
             'username', 'full_name', 'is_verified', 'is_private',
-            'followers_count', 'following_count', 'posts_count',
+            'followers_count', 'following_count',
+            'avg_post_likes','avg_post_comments', 'avg_post_reshares', 'posts_count',
             'last_updated'
         ]
         
@@ -39,7 +40,10 @@ class CsvExporter:
                 'is_private': profile.is_private,
                 'followers_count': profile.statistics.followers_count,
                 'following_count': profile.statistics.following_count,
-                'posts_count': profile.statistics.posts_count,
+                'avg_post_likes': profile.engagement_stats.recent_avg_post_likes,
+                'avg_post_comments': profile.engagement_stats.recent_avg_post_comments,
+                'avg_post_reshares': profile.engagement_stats.recent_avg_post_reshares,
+                'recent_posts_count': profile.engagement_stats.recent_post_count,
                 'last_updated': profile.statistics.last_updated.strftime('%Y-%m-%d %H:%M:%S')
             })
         

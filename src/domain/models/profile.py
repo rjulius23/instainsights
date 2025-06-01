@@ -14,8 +14,18 @@ class ProfileStatistics:
 
 
 @dataclass(frozen=True)
+class EngagementStatistics:
+    """Engagement statistics for an Instagram profile."""
+    recent_avg_post_likes: int
+    recent_avg_post_comments: int
+    recent_avg_post_reshares: int
+    recent_post_count: int
+
+
+@dataclass
 class Profile:
     """Instagram profile entity."""
+    userid: str
     username: str
     full_name: Optional[str]
     bio: Optional[str]
@@ -23,6 +33,7 @@ class Profile:
     is_private: bool
     profile_pic_url: Optional[str]
     statistics: ProfileStatistics
+    engagement_stats: EngagementStatistics
 
 
 @dataclass(frozen=True)
